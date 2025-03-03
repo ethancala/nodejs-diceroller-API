@@ -7,24 +7,22 @@
 </head>
 <body>
     <h1>Test the Dice Roller API</h1>
-    <button onclick="fetchDiceRoll()">Test API</button>
-    <p id="response"></p> 
+    <button id="testApi">Test API</button>
+    <p id="response"></p>
 
     <script>
-       async function fetchDiceRoll() {
+        document.getElementById("testApi").addEventListener("click", async () => {
             try {
-                const response = await fetch('/api/roll-dice');
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
+                const response = await fetch("https://expressserverdicerollerapi-grapdyb9e3h4b2f8.centralus-01.azurewebsites.net/api/roll-dice");
+                if (!response.ok) throw new Error("API Error");
 
                 const data = await response.json();
-                document.getElementById("response").innerText = `Roll: ${data.roll}`; // Corrected ID
+                document.getElementById("response").textContent = `Server Response: ${JSON.stringify(data)}`;
             } catch (error) {
-                document.getElementById("response").innerText = `Error: ${error.message}`;
+                document.getElementById("response").textContent = "Error calling API!";
+                console.error(error);
             }
-        }
+        });
     </script>
 </body>
 </html>
