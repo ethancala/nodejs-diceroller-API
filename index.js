@@ -48,3 +48,8 @@ app.get("/wake-up", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+// Start the server and explicitly bind to 0.0.0.0
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
