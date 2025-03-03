@@ -5,57 +5,32 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Configure CORS (Block specific origin for failure demonstration)
-// const corsOptions = {
-    
-//     origin: function (origin, callback) {
-
-//         //allowed origins
-//         const allowedOrigins = [
-//             "http://localhost:5500",  // Local testing
-//             "http://127.0.0.1:5500",  // Alternative local testing
-//             "https://agreeable-river-09927251e.4.azurestaticapps.net/"
-//         ];
-
-//         if (origin === "https://blocked-origin.com") {
-//             callback(new Error("CORS Error: This origin is blocked"));
-//         } else {
-//             callback(null, true);
-//         }
-//     },
-// };
-
+// Configure CORS (Temporarily allow all origins for debugging)
 const corsOptions = {
-    origin: "*", // Change back to specific origins once debugging is complete
+    origin: "*",
     methods: "GET,POST",
     allowedHeaders: "Content-Type",
 };
-
-app.use(express.json());
 app.use(cors(corsOptions));
+app.use(express.json());
 
 // Serve index.html for API testing
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
-});
+app.use(express.static(path.join(__dirname)));
 
 // API to generate a dice roll
 app.get("/api/roll-dice", (req, res) => {
+    console.log("Dice roll API called");
     const roll = Math.floor(Math.random() * 6) + 1;
     res.json({ roll });
 });
 
 // Wake-up endpoint
 app.get("/wake-up", (req, res) => {
+    console.log("Wake-up API called");
     res.send("Server is awake!");
 });
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
-
-// Start the server and explicitly bind to 0.0.0.0
+// Start the server (bind to 0.0.0.0 for Azure compatibility)
 app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
