@@ -14,7 +14,7 @@ const corsOptions = {
         const allowedOrigins = [
             "http://localhost:5500",  // Local testing
             "http://127.0.0.1:5500",  // Alternative local testing
-            "https://your-dice-roller-app.azurestaticapps.net"  // Deployed Azure site
+            "https://agreeable-river-09927251e.4.azurestaticapps.net/"
         ];
 
         if (origin === "https://blocked-origin.com") {
