@@ -1,17 +1,15 @@
 const express = require("express");
-const cors = require("cors");
-const path = require("path");
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Configure CORS (Temporarily allow all origins for debugging)
-const corsOptions = {
-    origin: "*",
-    methods: "GET,POST",
-    allowedHeaders: "Content-Type",
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//     origin: "*",
+//     methods: "GET,POST",
+//     allowedHeaders: "Content-Type",
+// };
+
+//app.use(cors(corsOptions));
 app.use(express.json());
 
 // Serve index.html for API testing
