@@ -13,7 +13,7 @@
     <script>
         document.getElementById("testApi").addEventListener("click", async () => {
             try {
-                const response = await fetch("http://localhost:3000/api/roll-dice");
+                const response = await fetch("https://expressserverdicerollerapi-grapdyb9e3h4b2f8.centralus-01.azurewebsites.net/");
                 if (!response.ok) throw new Error("API Error");
 
                 const data = await response.json();
