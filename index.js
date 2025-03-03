@@ -6,23 +6,29 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Configure CORS (Block specific origin for failure demonstration)
-const corsOptions = {
+// const corsOptions = {
     
-    origin: function (origin, callback) {
+//     origin: function (origin, callback) {
 
-        //allowed origins
-        const allowedOrigins = [
-            "http://localhost:5500",  // Local testing
-            "http://127.0.0.1:5500",  // Alternative local testing
-            "https://agreeable-river-09927251e.4.azurestaticapps.net/"
-        ];
+//         //allowed origins
+//         const allowedOrigins = [
+//             "http://localhost:5500",  // Local testing
+//             "http://127.0.0.1:5500",  // Alternative local testing
+//             "https://agreeable-river-09927251e.4.azurestaticapps.net/"
+//         ];
 
-        if (origin === "https://blocked-origin.com") {
-            callback(new Error("CORS Error: This origin is blocked"));
-        } else {
-            callback(null, true);
-        }
-    },
+//         if (origin === "https://blocked-origin.com") {
+//             callback(new Error("CORS Error: This origin is blocked"));
+//         } else {
+//             callback(null, true);
+//         }
+//     },
+// };
+
+const corsOptions = {
+    origin: "*", // Change back to specific origins once debugging is complete
+    methods: "GET,POST",
+    allowedHeaders: "Content-Type",
 };
 
 app.use(express.json());
