@@ -40,6 +40,12 @@ app.get("/api/roll-dice", (req, res) => {
     res.json({ roll });
 });
 
+// Wake-up endpoint
+app.get("/wake-up", (req, res) => {
+    res.send("Server is awake!");
+});
+
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
