@@ -1,46 +1,46 @@
 const express = require("express");
+const cors = require("cors");
+const path = require("path");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Configure CORS (Block specific origin for failure demonstration)
-// const corsOptions = {
+const corsOptions = {
     
-//     origin: function (origin, callback) {
+    origin: function (origin, callback) {
 
-//         //allowed origins
-//         const allowedOrigins = [
-//             "http://localhost:5500",  // Local testing
-//             "http://127.0.0.1:5500",  // Alternative local testing
-//             "https://agreeable-river-09927251e.4.azurestaticapps.net/"
-//         ];
+        //allowed origins
+        const allowedOrigins = [
+            "http://localhost:5500",  // Local testing
+            "http://127.0.0.1:5500",  // Alternative local testing
+            "https://agreeable-river-09927251e.4.azurestaticapps.net/", //dice roller
+            "https://expressserverdicerollerapi-grapdyb9e3h4b2f8.centralus-01.azurewebsites.net/"
+        ];
 
-//         if (origin === "https://blocked-origin.com") {
-//             callback(new Error("CORS Error: This origin is blocked"));
-//         } else {
-//             callback(null, true);
-//         }
-//     },
-// };
-//app.use(cors(corsOptions));
+        if (origin === "https://blocked-origin.com") {
+            callback(new Error("CORS Error: This origin is blocked"));
+        } else {
+            callback(null, true);
+        }
+    },
+};
+
 app.use(express.json());
+app.use(cors(corsOptions));
 
 // Serve index.html for API testing
-app.use(express.static(path.join(__dirname)));
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
+});
 
 // API to generate a dice roll
 app.get("/api/roll-dice", (req, res) => {
-    console.log("Dice roll API called");
     const roll = Math.floor(Math.random() * 6) + 1;
     res.json({ roll });
 });
 
-// Wake-up endpoint
-app.get("/wake-up", (req, res) => {
-    console.log("Wake-up API called");
-    res.send("Server is awake!");
-});
-
-// Start the server (bind to 0.0.0.0 for Azure compatibility)
-app.listen(PORT, "0.0.0.0", () => {
+// Start the server
+app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
