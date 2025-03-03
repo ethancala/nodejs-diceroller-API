@@ -8,14 +8,23 @@
 <body>
     <h1>Test the Dice Roller API</h1>
     <button onclick="fetchDiceRoll()">Test API</button>
-    <p id="response"></p>
+    <p id="response"></p> <!-- ID was "response", but script used "fetch-about-result" -->
 
     <script>
        async function fetchDiceRoll() {
-            const response = await fetch("https://expressserverdicerollerapi-grapdyb9e3h4b2f8.centralus-01.azurewebsites.net/api/roll-dice");
-            const data = await response.json();
-            document.getElementById("fetch-about-result").innerText = `Roll: ${data.roll}`;
+            try {
+                const response = await fetch("https://expressserverdicerollerapi-grapdyb9e3h4b2f8.centralus-01.azurewebsites.net/api/roll-dice");
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                document.getElementById("response").innerText = `Roll: ${data.roll}`; // Corrected ID
+            } catch (error) {
+                document.getElementById("response").innerText = `Error: ${error.message}`;
             }
+        }
     </script>
 </body>
 </html>
