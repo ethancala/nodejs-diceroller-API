@@ -8,12 +8,12 @@
 <body>
     <h1>Test the Dice Roller API</h1>
     <button onclick="fetchDiceRoll()">Test API</button>
-    <p id="response"></p> <!-- ID was "response", but script used "fetch-about-result" -->
+    <p id="response"></p> 
 
     <script>
        async function fetchDiceRoll() {
             try {
-                const response = await fetch("https://expressserverdicerollerapi-grapdyb9e3h4b2f8.centralus-01.azurewebsites.net/api/roll-dice");
+                const response = await fetch('/api/roll-dice');
                 
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
