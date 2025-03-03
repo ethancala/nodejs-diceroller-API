@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+</head>
+<body>
+    <h1>Test the Dice Roller API</h1>
+    <button id="testApi">Test API</button>
+    <p id="response"></p>
+
+    <script>
+        document.getElementById("testApi").addEventListener("click", async () => {
+            try {
+                const response = await fetch("http://localhost:3000/api/roll-dice");
+                if (!response.ok) throw new Error("API Error");
+
+                const data = await response.json();
+                document.getElementById("response").textContent = `Server Response: ${JSON.stringify(data)}`;
+            } catch (error) {
+                document.getElementById("response").textContent = "Error calling API!";
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -5,32 +5,26 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Configure CORS (Block a specific origin to demonstrate failure)
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (origin === "https://blocked-origin.com") {
-            callback(new Error("CORS Error: This origin is blocked"));
-        } else {
-            callback(null, true);
-        }
-    },
-};
+//  CORS Middleware 
+app.use(cors({
+    origin: "https://agreeable-river-09927251e.4.azurestaticapps.net/",
+}));
 
-app.use(express.json());
-app.use(cors(corsOptions));
+//  API Route – Returns a Random Dice Roll (1-6)
+app.get("/api/roll-dice", (req, res) => {
+    const diceRoll = Math.floor(Math.random() * 6) + 1;
+    res.json({ roll: diceRoll });
+});
 
-// Serve index.html for API testing
+// Wake-Up Route (Requirement 2)
+app.get("/wake-up", (req, res) => {
+    res.send("API is awake!");
+});
+
+//  Serve `index.html` as a test page (Requirement 1)
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// API endpoint to roll dice
-app.get("/api/roll-dice", (req, res) => {
-    const roll = Math.floor(Math.random() * 6) + 1;
-    res.json({ roll });
-});
-
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// Start Server
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
